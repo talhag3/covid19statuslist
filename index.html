@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>covid19</title>
+    <style>
+        *{
+            font-family:  Verdana, Arial, sans-serif !important;
+            color: #fff;
+        }
+        .container{
+            display: flex;
+            column-count: 3;
+            flex-direction: column;
+            flex-flow: wrap;
+        }
+        .item{
+            width: 32.33333%;
+            margin-left: 5px;
+            margin-bottom: 5px;
+            background-color: #41b3a39e;
+        }
+        .item-head{
+            font-weight: bold;
+            padding: 10px;
+            background-color: #41B3A3;
+            height: 30px;
+        }
+        .item-head .country-name{
+            float: left;
+        }
+        .item-head img{
+            float:right;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+        .item-footer{
+            width: 100%;
+            height: 5px;
+            background-color: #41B3A3;
+        }
+        .item-body{
+            padding: 10px;
+            display: flex;
+            column-count: 2;
+            flex-direction: column;
+            flex-flow: wrap;
+            column-gap: 5px;
+        }
+        .item-body div {
+            width: 49%;
+            padding-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="capp">
+        <div class=container>
+            <div class="item" v-for="data in cdata" :key="data.country">
+                <div class="item-head">
+                    <span class="country-name">{{data.country}}</span> 
+                    <img :src="data.countryInfo.flag" alt="" srcset="">
+                </div>
+                <div class="item-body">
+                    <div><span>Today Cases :</span> <span>{{data.todayCases}}</span></div>
+                    <div><span>Cases : </span><span>{{data.cases}}</span></div> 
+                    <div><span>Today Deaths :</span><span>{{data.todayDeaths}}</span></div>
+                    <div><span>Recovered :</span><span>{{data.recovered}}</span></div>
+                    <div><span>Today Recovered :</span><span>{{data.todayRecovered}}</span></div>
+                    <div><span>Active :</span><span>{{data.active}}</span></div>
+                    <div><span>Critical :</span><span>{{data.critical}}</span></div>
+                </div>
+                <div class="item-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://vuejs.org/js/vue.min.js"></script>
+    <script>
+        new Vue({
+            el: "#capp",
+            data: {
+                cdata:[]
+            },
+            mounted(){
+                this.getData();
+            },
+            methods: {
+                getData(){
+                    axios.get('https://corona.lmao.ninja/v2/countries').then((res)=>{
+                        if(res.status===200){
+                            this.cdata = res.data
+                        }
+                    }).catch((err)=>{
+                        console.log(err)
+                    })
+                }    
+            }
+        });
+    </script>
+</body>
+</html>
