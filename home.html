@@ -48,6 +48,7 @@
             flex-direction: column;
             flex-flow: wrap;
             column-gap: 5px;
+            min-height: 130px;
         }
         .item-body div {
             width: 49%;
@@ -90,7 +91,7 @@
             },
             methods: {
                 getData(){
-                    axios.get('https://corona.lmao.ninja/v2/countries').then((res)=>{
+                    axios.get('https://corona.lmao.ninja/v2/countries?sort=cases').then((res)=>{
                         if(res.status===200){
                             this.cdata = res.data
                         }
